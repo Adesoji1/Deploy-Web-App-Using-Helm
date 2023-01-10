@@ -1,0 +1,125 @@
+frontend:
+  labels:
+    app: alux-frontend
+
+  deploy:
+    name: alux-frontend-deploy
+    replicas: 2
+    containers:
+      name: alux-frontend
+      imagePullPolicy: IfNotPresent
+      image: alux-frontend:latest
+      ports:
+        containerPort: 80
+        name: httpfront
+
+  service:
+    name: alux-frontend-svc
+    type: NodePort
+    labels:
+      app: alux-frontend
+    ports:
+      name:  port-frontend
+      port: 80
+      nodePort: 30017
+      targetPort: httpfront
+
+
+backend:
+  labels:
+    app: alux-backend
+
+  deploy:
+    name: alux-backend-deploy
+    replicas: 1
+    containers:
+      name: alux-backend
+      imagePullPolicy: IfNotPresent
+      image: alux-backend:latest
+      ports:
+        containerPort: 8000
+        name: httpback
+      # env:
+      # - name: REACT_APP_BACKEND_URL
+      #   value: "http://localhost:7777/posts4s" 
+
+  service:
+    name: alux-backend-svcs
+    type: NodePort
+    labels:
+      app: alux-backend
+    ports:
+      name:  port-backend
+      port: 8000
+      nodePort: 30008
+      targetPort: httpback
+
+
+# backend:
+#   replicaCount: 1
+
+#   deploy:
+#     name: alux-backend-deploy
+
+#   labels:
+#     app: alux
+#     type: backend
+
+#   containers:
+#     name: alux-backend
+#     imagePullPolicy: IfNotPresent
+#     image: alux-backend
+#     tag: "latest"
+#     ports:
+#       containerPort: 8000
+
+#   service:
+#     name: alux-backend-svc
+#     type: NodePort
+#     ports:
+#       containerPort: 8000
+#       targetPort: 8000
+#       nodePort: 31015
+
+
+# frontend:
+#   replicaCount: 1
+
+#   deploy:
+#     name: alux-frontend-deploy
+
+#   labels:
+#     app: alux
+#     type: frontend
+
+#   containers:
+#     name: alux-frontend
+#     imagePullPolicy: IfNotPresent
+#     image: alux-frontend
+#     tag: "latest"
+#     ports:
+#       containerPort: 80
+#     env:
+#       name: REACT_APP_BACKEND_URL
+#       value: "http://localhost:{{ .Values.backend.service.nodePort }}/posts"
+
+#   service:
+#     name: alux-frontend-svc
+#     type: NodePort
+#     ports:
+#       containerPort: 80
+#       targetPort: 80
+#       nodePort: 31010
+
+
+# ingress:
+#   name: alux-ingress
+#   host: dev.local 
+#   services:
+#     - name: alux-frontend-svc
+#       port: 80 
+#       path: "/"
+#     - name: alux-backend-svc
+#       port: 8000
+#       path: "/api" 
+

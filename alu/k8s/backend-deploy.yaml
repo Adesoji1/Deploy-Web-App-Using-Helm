@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alux-backend-deploy
+  labels:
+    app: alux-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alux-backend
+  template:
+    metadata:
+      labels:
+        app: alux-backend
+    spec:
+      containers:
+        - name: alux-backend
+          imagePullPolicy: IfNotPresent
+          image: alux-backend:latest
+          ports:
+            - containerPort: 8000 
+              name: httpback

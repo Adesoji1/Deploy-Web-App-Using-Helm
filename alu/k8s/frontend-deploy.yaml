@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alux-frontend-deploy
+  labels:
+    app: alux-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: alux-frontend
+  template:
+    metadata:
+      labels:
+        app: alux-frontend
+    spec:
+      containers:
+        - name: alux-frontend
+          imagePullPolicy: IfNotPresent
+          image: alux-frontend:latest
+          ports:
+            - containerPort: 80
+              name: httpfront
+          env:
+          - name: REACT_APP_BACKEND_URL
+            value: "http://localhost:30008/posts" 
+
+

@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.deploy.name }}
+  labels:
+    app: {{ .Values.frontend.labels.app }}
+spec:
+  replicas: {{ .Values.frontend.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.labels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.labels.app }}
+    spec:
+      containers:
+        - name: {{ .Values.frontend.deploy.containers.name }}
+          imagePullPolicy: {{ .Values.frontend.deploy.containers.imagePullPolicy }}
+          image: "{{ .Values.frontend.deploy.containers.image }}"
+          ports:
+            - containerPort: {{ .Values.frontend.deploy.containers.ports.containerPort }} 
+              name: {{ .Values.frontend.deploy.containers.ports.name }}
+          env:
+            - name: PIN
+              value: "123456789"
+            - name: VAN
+              value: 2023
+              

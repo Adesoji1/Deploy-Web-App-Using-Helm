@@ -1,0 +1,16 @@
+SQLAlchemy==1.4.41
+
+fastapi
+uvicorn
+# logger
+
+email-validator
+pyfiglet 
+
+werkzeug
+flask_bcrypt
+
+pyfiglet
+elastic-apm
+
+python-decouple
