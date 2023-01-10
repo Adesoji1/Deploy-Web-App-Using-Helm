@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  flask-rest-api:
+    image: alux-backend
+    container_name: alux-backend
+    restart: always
+    ports:
+      - 8558:8000
+    env_file:
+      - flask/.env 
+    volumes:
+      - ./flask:/usr/src/app 
+
+  # react-front:
+  #   image: react-front 
+  #   container_name: react-front
+  #   restart: always
+  #   ports:
+  #     - 8668:3000 
+  #   volumes:
+  #     - ./frontend:/app 
+    
+
